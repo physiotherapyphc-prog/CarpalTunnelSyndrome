@@ -5,32 +5,41 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>البرنامج المنزلي لمتلازمة النفق الرسغي | مراكز الرعاية الصحية الأولية</title>
-  <!-- الخط الاحتياطي فقط: الدليل يعتمد Frutiger LT Arabic للمحتوى الرقمي، ويُستخدم هذا الخط إذا لم يكن متوفراً على الجهاز -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&family=Noto+Sans+Devanagari:wght@400;500;700;800&family=Noto+Sans+Bengali:wght@400;500;700;800&display=swap"
+    rel="stylesheet">
   <style>
-    /* ===== هوية مراكز الرعاية الصحية الأولية ===== */
     :root {
       --navy: #3D4A6D;
-      /* اللون الرئيسي 1 */
       --green: #81B199;
-      /* اللون الرئيسي 2 */
       --green-deep: #4C8E78;
-      /* فرعي */
       --blue: #4A6AAF;
-      /* فرعي */
       --sand: #AD9B73;
-      /* فرعي */
       --red: #C16363;
-      /* فرعي */
       --paper: #F0F2F1;
-      /* خلفية الدليل */
       --ink: #2B3450;
       --font: 'Frutiger LT Arabic', 'Sakkal Majalla', 'Tajawal', 'Segoe UI', Tahoma, sans-serif;
-
-      /* ضع صورة الخلفية هنا، مثال: url('hero.jpg') */
       --hero-bg: none;
+
+      --d: 1;
+    }
+
+    html[dir="ltr"] {
+      --d: -1;
+    }
+
+    html[lang="en"] {
+      --font: 'Frutiger LT Arabic', 'Tajawal', 'Segoe UI', Tahoma, sans-serif;
+    }
+
+    html[lang="hi"] {
+      --font: 'Noto Sans Devanagari', 'Nirmala UI', 'Segoe UI', Tahoma, sans-serif;
+    }
+
+    html[lang="bn"] {
+      --font: 'Noto Sans Bengali', 'Nirmala UI', 'Segoe UI', Tahoma, sans-serif;
     }
 
     * {
@@ -63,7 +72,6 @@
       outline-offset: 3px
     }
 
-    /* ===== الشرائح ===== */
     .slide {
       min-height: 100svh;
       scroll-snap-align: start;
@@ -84,7 +92,7 @@
     }
 
     .slide.flip .inner .media {
-      order: -1
+      order: 0
     }
 
     h1,
@@ -105,11 +113,11 @@
       border-inline-start: 6px solid var(--green)
     }
 
-    /* ===== الصور (نص بديل حتى تضيف صورتك) ===== */
     .media {
       position: relative;
       aspect-ratio: 4/3;
-      border-radius: 18px 18px 18px 90px;
+      border-radius: 18px;
+      border-end-end-radius: 90px;
       background: #fff;
       border: 2px dashed var(--green);
       display: grid;
@@ -118,7 +126,7 @@
       text-align: center;
       font-size: 1rem;
       overflow: hidden;
-      box-shadow: 18px 18px 0 -2px var(--green)
+      box-shadow: calc(18px * var(--d)) 18px 0 -2px var(--green)
     }
 
     .media::before {
@@ -141,7 +149,7 @@
     }
 
     .media.cover-img img {
-      object-fit: cover;
+      object-fit: cover
     }
 
     .media video {
@@ -159,18 +167,14 @@
       display: none
     }
 
-    .media span {
-      padding: 1rem
-    }
-
-    /* ===== القوائم ===== */
     .points {
       list-style: none
     }
 
     .points li {
       position: relative;
-      padding: .7rem 2rem .7rem 0;
+      padding: .7rem 0;
+      padding-inline-start: 2rem;
       border-bottom: 1px solid rgba(61, 74, 109, .15)
     }
 
@@ -190,12 +194,19 @@
       box-shadow: 0 0 0 4px rgba(129, 177, 153, .3)
     }
 
-    .points li {
-      padding-inline-start: 2rem;
-      padding-inline-end: 0
+    .head {
+      grid-column: 1 / -1
     }
 
-    /* ===== 1) الغلاف ===== */
+    .when {
+      max-width: none;
+      font-size: 1.05em
+    }
+
+    .when b {
+      color: var(--navy)
+    }
+
     .hero {
       background: linear-gradient(rgba(61, 74, 109, .88), rgba(61, 74, 109, .94)), var(--hero-bg) center/cover, var(--navy);
       color: #fff;
@@ -210,13 +221,15 @@
       color: #fff;
       margin-top: 2.2rem;
       max-width: 20ch;
-      margin-inline: auto
+      margin-inline: auto;
+      animation: titleIn 1s .45s cubic-bezier(.2, .8, .2, 1) both
     }
 
     .hero p {
       color: var(--green);
       font-weight: 500;
-      margin-top: 1rem
+      margin-top: 1rem;
+      animation: titleIn 1s .7s cubic-bezier(.2, .8, .2, 1) both
     }
 
     .logo-slot {
@@ -226,9 +239,7 @@
       margin-inline: auto;
       display: grid;
       place-items: center;
-      /* border: 2px dashed rgba(255, 255, 255, .5); */
       border-radius: 14px;
-      font-size: .95rem;
       color: #fff
     }
 
@@ -240,21 +251,8 @@
       object-fit: contain
     }
 
-    .logo-slot img[src=""],
-    .logo-slot img:not([src]) {
-      display: none
-    }
-
     .hero .logo-slot {
       animation: logoIn 1.2s cubic-bezier(.2, .8, .2, 1) both
-    }
-
-    .hero h1 {
-      animation: titleIn 1s .45s cubic-bezier(.2, .8, .2, 1) both
-    }
-
-    .hero p {
-      animation: titleIn 1s .7s cubic-bezier(.2, .8, .2, 1) both
     }
 
     @keyframes logoIn {
@@ -317,7 +315,6 @@
       }
     }
 
-    /* ===== الفاصل ===== */
     .interval {
       background: var(--green);
       text-align: center;
@@ -327,11 +324,10 @@
     .interval h2 {
       border: 0;
       padding: 0;
-      margin: 0;
+      margin: 0 auto;
       color: var(--navy);
       font-size: clamp(2rem, 6vw, 4.6rem);
       max-width: 18ch;
-      margin-inline: auto;
       position: relative;
       z-index: 1
     }
@@ -369,7 +365,6 @@
       }
     }
 
-    /* ===== الشرائح الداكنة والتمارين ===== */
     .alt {
       background: #fff
     }
@@ -382,7 +377,8 @@
     .exercise .steps li {
       counter-increment: s;
       position: relative;
-      padding: .6rem 3.2rem .6rem 0
+      padding: .6rem 0;
+      padding-inline-start: 3.2rem
     }
 
     .exercise .steps li::before {
@@ -399,11 +395,6 @@
       place-items: center;
       font-weight: 700;
       font-size: 1rem
-    }
-
-    .exercise .steps li {
-      padding-inline-start: 3.2rem;
-      padding-inline-end: 0
     }
 
     .chips {
@@ -426,13 +417,11 @@
       background: var(--green-deep)
     }
 
-    /* ===== التذييل ===== */
     .footer {
       background: var(--navy);
       color: #fff;
       text-align: center;
-      min-height: 60svh;
-      min-height: 100svh;
+      min-height: 100svh
     }
 
     .footer .inner {
@@ -453,36 +442,34 @@
     .footer .contact {
       margin-top: 1.6rem;
       color: var(--green);
-      font-weight: 500;
-      direction: ltr
+      font-weight: 500
     }
 
-    /* ===== ظهور المحتوى عند الوصول للشريحة ===== */
     .slide:not(.hero) .rv {
       opacity: 0;
       transition: opacity .8s cubic-bezier(.2, .8, .2, 1), transform .8s cubic-bezier(.2, .8, .2, 1);
-      transition-delay: calc(var(--i, 0)*110ms)
+      transition-delay: calc(var(--i, 0) * 110ms)
     }
 
     .slide:not(.hero) .text.rv {
-      transform: translateX(60px)
+      transform: translateX(calc(60px * var(--d)))
     }
 
     .slide:not(.hero) .media.rv {
-      transform: translateX(-60px) scale(.96)
+      transform: translateX(calc(-60px * var(--d))) scale(.96)
     }
 
     .slide.flip:not(.hero) .text.rv {
-      transform: translateX(-60px)
+      transform: translateX(calc(-60px * var(--d)))
     }
 
     .slide.flip:not(.hero) .media.rv {
-      transform: translateX(60px) scale(.96)
+      transform: translateX(calc(60px * var(--d))) scale(.96)
     }
 
     .slide:not(.hero) .points li.rv,
     .slide:not(.hero) .steps li.rv {
-      transform: translateX(40px)
+      transform: translateX(calc(40px * var(--d)))
     }
 
     .slide.in .rv {
@@ -490,7 +477,6 @@
       transform: none !important
     }
 
-    /* ===== التنقل ===== */
     .bar {
       position: fixed;
       top: 0;
@@ -535,6 +521,57 @@
       transform: scale(1.5)
     }
 
+    .lang {
+      position: fixed;
+      top: 1rem;
+      inset-inline-end: 1rem;
+      z-index: 30;
+      display: flex;
+      gap: 2px;
+      padding: 3px;
+      background: rgba(255, 255, 255, .94);
+      border: 1px solid rgba(61, 74, 109, .25);
+      border-radius: 99px;
+      box-shadow: 0 4px 14px rgba(43, 52, 80, .18);
+      backdrop-filter: blur(6px)
+    }
+
+    .lang button {
+      font: 600 .85rem/1 var(--font);
+      color: var(--navy);
+      background: transparent;
+      border: 0;
+      border-radius: 99px;
+      padding: .5rem .8rem;
+      cursor: pointer;
+      transition: background .25s, color .25s
+    }
+
+    .lang button[lang="ar"] {
+      font-family: 'Frutiger LT Arabic', 'Tajawal', sans-serif
+    }
+
+    .lang button[lang="en"] {
+      font-family: 'Frutiger LT Arabic', 'Tajawal', 'Segoe UI', sans-serif
+    }
+
+    .lang button[lang="hi"] {
+      font-family: 'Noto Sans Devanagari', 'Nirmala UI', sans-serif
+    }
+
+    .lang button[lang="bn"] {
+      font-family: 'Noto Sans Bengali', 'Nirmala UI', sans-serif
+    }
+
+    .lang button:hover {
+      background: rgba(129, 177, 153, .3)
+    }
+
+    .lang button[aria-pressed="true"] {
+      background: var(--navy);
+      color: #fff
+    }
+
     @media (max-width:860px) {
       .inner {
         grid-template-columns: 1fr
@@ -549,7 +586,17 @@
       }
 
       .media {
-        box-shadow: 10px 10px 0 -2px var(--green)
+        box-shadow: calc(10px * var(--d)) 10px 0 -2px var(--green)
+      }
+
+      .lang {
+        top: .6rem;
+        inset-inline-end: .6rem
+      }
+
+      .lang button {
+        padding: .45rem .6rem;
+        font-size: .8rem
       }
     }
 
@@ -574,190 +621,440 @@
 <body>
 
   <div class="bar" aria-hidden="true"><i id="progress"></i></div>
-  <nav class="dots" id="dots" aria-label="التنقل بين الأقسام"></nav>
 
-  <!-- القسم 1: الغلاف -->
-  <section class="slide hero" data-label="الغلاف">
+  <div class="lang" role="group" aria-label="اللغة / Language">
+    <button type="button" data-lang="ar" lang="ar">العربية</button>
+    <button type="button" data-lang="en" lang="en">English</button>
+    <button type="button" data-lang="hi" lang="hi">हिन्दी</button>
+    <button type="button" data-lang="bn" lang="bn">বাংলা</button>
+  </div>
+
+  <nav class="dots" id="dots" aria-label="التنقل بين الأقسام" data-i18n-aria="nav.label"></nav>
+
+
+  <section class="slide hero" data-label="الغلاف" data-i18n-label="lbl.cover">
     <div class="inner">
       <div class="logo-slot">
-        <img src="assets\primary-logo-white.png" alt="شعار مراكز الرعاية الصحية الأولية">
+        <img src="assets/primary-logo-white.png" alt="شعار مراكز الرعاية الصحية الأولية" data-i18n-alt="logo.alt">
       </div>
-      <h1>متلازمة النفق الرسغي</h1>
-      <!-- <p>مراكز الرعاية الصحية الأولية</p> -->
-      <p>خدمات العلاج الطبيعي</p>
+      <h1 data-i18n="hero.title">متلازمة النفق الرسغي</h1>
+      <p data-i18n="hero.sub">خدمات العلاج الطبيعي</p>
     </div>
     <div class="scroll-hint" aria-hidden="true"></div>
   </section>
 
-  <!-- القسم 2: صورة + 5 نقاط -->
-  <section class="slide" data-label="التعريف">
+
+  <section class="slide" data-label="التعريف" data-i18n-label="lbl.intro">
     <div class="inner">
+      <div class="head">
+        <h2 class="rv" style="--i:0" data-i18n="s2.title">ما هي متلازمة النفق الرسغي؟</h2>
+      </div>
       <div class="text">
-        <h2 class="rv" style="--i:0">ما هي متلازمة النفق الرسغي؟</h2>
         <ul class="points">
-          <li class="rv" style="--i:1">
-            عراض تظهر في اليد كالألم و التنمل أو الخدران و ذلك نتيجة للضغض الواقع على العصب الأوسط والذي يمر في القناة
-            الرسغية في مفصل الرسغ.
-          </li>
-          <li class="rv" style="--i:2">
-            تزداد فرصة االصابة مع الاستخدام الزائد لليد كالأعمال اليدوية وضائف الطياعة على الكمبيوتر, كما تزداد عند
-            النساء الحوامل, عند المصابين بالسكري وذوي الوزن الزائد (السمنة) وأسباب أخرى
-          </li>
-          <li class="rv" style="--i:3">
-            يستحسن تقييم طبيعة العمل اليدوي مع محاولة تعديله أو تقليله بطريقة تقلل من الجهد و الضغط الزائي على اليد.
-          </li>
-          <li class="rv" style="--i:4">
-            أخذ فترات راحة أثناء ممارسة الأعمال اليدوية.
-          </li>
-          <li class="rv" style="--i:5">
-            يمكن أن يساعد ارتداء جبيرة الراحة في منع الأعراض التي تحدث ليلاً, أة يمكن أن تكون مفيدة إذا ظهرت أعراضك من
-            خلال القيام بأنشطة معية.
-          </li>
+          <li class="rv" style="--i:1" data-i18n="s2.p1">أعراض تظهر في اليد كالألم والتنمل أو الخدران، وذلك نتيجة للضغط
+            الواقع على العصب الأوسط الذي يمر في القناة الرسغية في مفصل الرسغ.</li>
+          <li class="rv" style="--i:2" data-i18n="s2.p2">تزداد فرصة الإصابة مع الاستخدام الزائد لليد كالأعمال اليدوية
+            ووظائف الطباعة على الكمبيوتر، كما تزداد عند النساء الحوامل، وعند المصابين بالسكري وذوي الوزن الزائد
+            (السمنة)، ولأسباب أخرى.</li>
+          <li class="rv" style="--i:3" data-i18n="s2.p3">يستحسن تقييم طبيعة العمل اليدوي مع محاولة تعديله أو تقليله
+            بطريقة تقلل من الجهد والضغط الزائد على اليد.</li>
+          <li class="rv" style="--i:4" data-i18n="s2.p4">أخذ فترات راحة أثناء ممارسة الأعمال اليدوية.</li>
+          <li class="rv" style="--i:5" data-i18n="s2.p5">يمكن أن يساعد ارتداء جبيرة الراحة في منع الأعراض التي تحدث
+            ليلاً، أو يمكن أن تكون مفيدة إذا ظهرت أعراضك من خلال القيام بأنشطة معينة.</li>
         </ul>
       </div>
-      <div class="media rv" style="--i:1"><img src="assets\CTS Main.png" alt="مناطق الألم في متلازمة النفق الرسغي">
-      </div>
+      <div class="media rv" style="--i:1"><img src="assets/CTS Main.png" alt="مناطق الألم في متلازمة النفق الرسغي"
+          data-i18n-alt="s2.alt"></div>
     </div>
   </section>
 
-  <!-- الفاصل -->
-  <section class="slide interval" data-label="الفاصل">
+
+  <section class="slide interval" data-label="الفاصل" data-i18n-label="lbl.interval">
     <div class="ring"></div>
     <div class="ring"></div>
-    <h2 class="rv">برنامج منزلي لمتلازمة النفق الرسغي</h2>
+    <h2 class="rv" data-i18n="iv.title">برنامج منزلي لمتلازمة النفق الرسغي</h2>
   </section>
 
-  <!-- القسم 3: عنوان فرعي + 5 نقاط + صورة -->
-  <section class="slide alt flip" data-label="الأعراض">
+
+  <section class="slide alt flip" data-label="ساند اليد" data-i18n-label="lbl.support">
     <div class="inner">
+      <div class="head">
+        <h2 class="rv" style="--i:0" data-i18n="s3.title">مواصفات ساند اليد</h2>
+      </div>
       <div class="text">
-        <h2 class="rv" style="--i:0">مواصفات سناد اليد</h2>
         <ol class="steps">
-          <li class="rv" style="--i:1">يساعد في عالج متالزمة النفق الرسغي.</li>
-          <li class="rv" style="--i:2">أشرطة قابلة للتعديل و سهلة اللبس.</li>
-          <li class="rv" style="--i:3">ظهر اليد مرن و سهل التحكم في الدعامة و صالبة السناد. لذلك بإمكانك إزالة
-            الدعامة
-            خلال اليوم و اضافتها وقت النوم.</li>
-          <li class="rv" style="--i:4">مقاس الساند يعتمد على قياس محيط الرسغ.</li>
-          <li class="rv" style="--i:5">تأكد من سناد اليد هل هو لليد اليسرى أو اليمنى.</li>
+          <li class="rv" style="--i:1" data-i18n="s3.p1">يساعد في علاج متلازمة النفق الرسغي.</li>
+          <li class="rv" style="--i:2" data-i18n="s3.p2">أشرطة قابلة للتعديل وسهلة اللبس.</li>
+          <li class="rv" style="--i:3" data-i18n="s3.p3">ظهر اليد مرن وسهل التحكم في الدعامة وصلابة الساند. لذلك بإمكانك
+            إزالة الدعامة خلال اليوم وإضافتها وقت النوم.</li>
+          <li class="rv" style="--i:4" data-i18n="s3.p4">مقاس الساند يعتمد على قياس محيط الرسغ.</li>
+          <li class="rv" style="--i:5" data-i18n="s3.p5">تأكد من أن ساند اليد مخصص لليد اليسرى أو اليمنى.</li>
         </ol>
       </div>
-      <div class="media rv" style="--i:1"><img src="assets\wrist support.png" alt="سناد اليد"></div>
+      <div class="media rv" style="--i:1"><img src="assets/wrist support.png" alt="ساند اليد" data-i18n-alt="s3.alt">
+      </div>
     </div>
   </section>
 
-  <!-- القسم 4: عنوان فرعي + 6 نقاط + صورة -->
-  <section class="slide" data-label="النصائح">
+  <section class="slide" data-label="الكمادات الباردة" data-i18n-label="lbl.cold">
     <div class="inner">
+      <div class="head">
+        <h2 class="rv" style="--i:0" data-i18n="s4.title">استخدام الكمادات الباردة</h2>
+        <p class="when rv" style="--i:1" data-i18n="s4.when"><b>متى تُستخدم:</b> تُعد الأفضل لحالات الألم المفاجئ
+          (التهيج الحاد)، أو عند وجود التهاب، أو إذا كان المعصم يبدو ساخناً أو متورماً أو متهيجاً بعد القيام بأنشطة
+          متكررة.</p>
+      </div>
       <div class="text">
-        <h2 class="rv" style="--i:0">اﺳﺘﺨﺪام اﻟﻜﻤﺎدات اﻟﺒﺎردة</h2>
         <ul class="points">
-          <li class="rv" style="--i:1">ﻟﻒ اﻟﻜﻤﺎدة ﺑﺎﺳﺘﺨﺪام ﻣﻨﺸﻔﺔ ﺻﻐﻴﺮة.</li>
-          <li class="rv" style="--i:2">اﺳﺘﺨﺪﻣﻬﺎ ﻟﻤﺪة 10 إﻟﻰ 20 دﻗﻴﻘﺔ وﺑﺎﻹﻣﻜﺎن ﺗﻜﺮار اﻻﺳﺘﺨﺪام ﻛﻞ ﺳﺎﻋﺘﻴﻦ إﻟﻰ ﺛﻼث ﺳﺎﻋﺎت
-          </li>
-          <li class="rv" style="--i:3"> ﻳﺠﺐ أن ﻻ ﺗﻀﻊ اﻟﺜﻠﺞ ﻣﺒﺎﺷﺮة ﻋﻠﻰ اﻟﺠﻠﺪ.</li>
-          <li class="rv" style="--i:4">ﻓﻲ ﺣﺎﻟﺔ اﻟﺘﺪﻟﻴﻚ ﺑﺎﺳﺘﺨﺪام اﻟﺜﻠﺞ ﻳﺘﻢ ﺗـﺪﻟـﻴـﻚ اﻟﻤﻨﻄﻘﺔ ﻣﺒﺎﺷﺮة ﺑﺎﺳﺘﺨﺪام ﻗﻄﻌﺔ ﺛﻠﺞ
-            ﻟﻤـﺪة دﻗﻴﻘﺘﻴﻦ إﻟﻰ ﺛﻼث دﻗﺎﺋﻖ ﻟﻠﻤﻨﻄﻘﺔ اﻟﺼﻐـﻴـﺮة و ﺧﻤﺲ دﻗﺎﺋﻖ ﻟﻠﻤﻨﺎﻃﻖ اﻟﻜﺒﻴﺮة.</li>
-          <li class="rv" style="--i:5">اﺳﺘﺨﺪم اﻟﻌﻼج اﻟﺒﺎرد ﻣﺒﺎﺷﺮة ﺑﻌﺪ اﻹﺻﺎﺑﺔ.</li>
-          <li class="rv" style="--i:6">ﻟﻠﺤﺼﻮل ﻋﻠﻰ أﻓﻀـﻞ اﻟـﻨـﺘـﺎﺋـﺞ ارﻓـﻊ اﻟـﺠـ اﻟﻤﺼﺎب ﻟﻸﻋﻠﻰ.</li>
+          <li class="rv" style="--i:2" data-i18n="s4.p1">لف الكمادة باستخدام منشفة صغيرة.</li>
+          <li class="rv" style="--i:3" data-i18n="s4.p2">استخدمها لمدة 10 إلى 20 دقيقة، وبالإمكان تكرار الاستخدام كل
+            ساعتين إلى ثلاث ساعات.</li>
+          <li class="rv" style="--i:4" data-i18n="s4.p3">يجب ألا تضع الثلج مباشرة على جلد اليد أو المعصم.</li>
+          <li class="rv" style="--i:5" data-i18n="s4.p4">في حالة التدليك باستخدام الثلج، دلّك منطقة المعصم والكف مباشرة
+            بقطعة ثلج لمدة دقيقتين إلى ثلاث دقائق للمنطقة الصغيرة وخمس دقائق للمناطق الكبيرة.</li>
+          <li class="rv" style="--i:6" data-i18n="s4.p5">استخدم العلاج البارد فور ظهور الألم أو التورم في المعصم.</li>
+          <li class="rv" style="--i:7" data-i18n="s4.p6">للحصول على أفضل النتائج ارفع اليد المصابة للأعلى.</li>
         </ul>
       </div>
-      <div class="media rv" style="--i:1"><img src="assets\Ice.png" alt="كمادات الثلج"></div>
+      <div class="media rv" style="--i:2"><img src="assets/Ice.png" alt="كمادات الثلج" data-i18n-alt="s4.alt"></div>
     </div>
   </section>
 
-  <!-- الأقسام 5-7: التمارين (GIF + تعليمات) -->
-  <section class="slide alt exercise flip" data-label="التمرين 1">
+  <section class="slide alt flip" data-label="الكمادات الساخنة" data-i18n-label="lbl.hot">
     <div class="inner">
-      <div class="text">
-        <h2 class="rv" style="--i:0">التمرين الأول: تمديد عضلات اليد القابضة</h2>
-        <ol class="steps">
-          <li class="rv" style="--i:1"><b>الخطوة الأولى:</b> مدّ ذراعك: ارفع ذراعك بشكل مستقيم أمام جسمك بمستوى الكتف،
-            مع
-            الحفاظ على استقامة المرفق تماماً وجعل راحة كفك متجهة للأعلى نحو السقف.</li>
-          <li class="rv" style="--i:2"><b>الخطوة الثانية:</b> اسحب أصابعك للخلف: استخدم يدك الأخرى للإمساك بأصابع اليد
-            الممدودة، ثم اسحبها بلطف للأسفل وللخلف باتجاه جسمك لتمديد المعصم.</li>
-          <li class="rv" style="--i:3"><b>الخطوة الثالثة:</b> الثبات والتكرار: حافظ على هذه الوضعية لمدة 20 إلى 30 ثانية
-            مع التنفس بعمق.</li>
-        </ol>
-        <div class="chips rv" style="--i:4"><b>التكرار: 3 مرات</b><b>الثبات: 30 ثانية</b></div>
+      <div class="head">
+        <h2 class="rv" style="--i:0" data-i18n="s5.title">استخدام الكمادات الساخنة</h2>
+        <p class="when rv" style="--i:1" data-i18n="s5.when"><b>متى تُستخدم:</b> تُعد الأفضل لحالات الألم المزمن
+          المستمر، أو التيبس والصلابة، أو عندما تكون عضلات وأوتار اليد والمعصم مشدودة.</p>
       </div>
-      <div class="media rv cover-img" style="--i:1"><img src="assets\002-Wrist_and_Fingers_Flexors_Stretch_1.gif"
+      <div class="text">
+        <ul class="points">
+          <li class="rv" style="--i:2" data-i18n="s5.p1">استخدمها لمدة 15 إلى 20 دقيقة فقط.</li>
+          <li class="rv" style="--i:3" data-i18n="s5.p2">بالإمكان إعادة استخدامها كل ساعتين.</li>
+          <li class="rv" style="--i:4" data-i18n="s5.p3">لف الكمادة بمنشفة جافة وضعها على اليد والمعصم.</li>
+          <li class="rv" style="--i:5" data-i18n="s5.p4">يمكنك أيضاً نقع يدك في ماء دافئ لمدة 15 دقيقة لتخفيف التيبس
+            المرتبط بمتلازمة النفق الرسغي.</li>
+        </ul>
+      </div>
+      <div class="media rv" style="--i:2"><img src="assets/Hot.png" alt="كمادات ساخنة" data-i18n-alt="s5.alt"></div>
+    </div>
+  </section>
+
+  <section class="slide alt exercise flip" data-label="التمرين 1" data-i18n-label="lbl.ex1">
+    <div class="inner">
+      <div class="head">
+        <h2 class="rv" style="--i:0" data-i18n="e1.title">التمرين الأول: تمديد عضلات اليد القابضة</h2>
+      </div>
+      <div class="text">
+        <ol class="steps">
+          <li class="rv" style="--i:1" data-i18n="e1.s1"><b>الخطوة الأولى:</b> مدّ ذراعك: ارفع ذراعك بشكل مستقيم أمام
+            جسمك بمستوى الكتف، مع الحفاظ على استقامة المرفق تماماً وجعل راحة كفك متجهة للأعلى نحو السقف.</li>
+          <li class="rv" style="--i:2" data-i18n="e1.s2"><b>الخطوة الثانية:</b> اسحب أصابعك للخلف: استخدم يدك الأخرى
+            للإمساك بأصابع اليد الممدودة، ثم اسحبها بلطف للأسفل وللخلف باتجاه جسمك لتمديد المعصم.</li>
+          <li class="rv" style="--i:3" data-i18n="e1.s3"><b>الخطوة الثالثة:</b> الثبات والتكرار: حافظ على هذه الوضعية
+            لمدة 20 إلى 30 ثانية مع التنفس بعمق.</li>
+        </ol>
+        <div class="chips rv" style="--i:4"><b data-i18n="chip.rep3">التكرار: 3 مرات</b><b
+            data-i18n="chip.hold30">الثبات: 30 ثانية</b></div>
+      </div>
+      <div class="media rv cover-img" style="--i:1"><img src="assets/002-Wrist_and_Fingers_Flexors_Stretch_1.gif"
           alt=""></div>
     </div>
   </section>
 
-  <section class="slide exercise" data-label="التمرين 2">
+  <section class="slide exercise" data-label="التمرين 2" data-i18n-label="lbl.ex2">
     <div class="inner">
-      <div class="text">
-        <h2 class="rv" style="--i:0">التمرين الثاني: تمديد عضلات اليد الباسطة</h2>
-        <ol class="steps">
-          <li class="rv" style="--i:1"><b>الخطوة الأولى:</b>
-            مدّ ذراعك: ارفع ذراعك بشكل مستقيم أمام جسمك بمستوى الكتف، مع الحفاظ على استقامة المرفق تماماً وجعل
-            راحة كفك متجهة للأسفل نحو الأرض.
-          </li>
-          <li class="rv" style="--i:2"><b>الخطوة الثانية:</b>
-            اثنِ معصمك لأسفل: استخدم يدك الأخرى للإمساك بظهر اليد الممدودة (أو الأصابع)، ثم اضغط عليها بلطف للأسفل
-            وللداخل باتجاه جسمك
-          </li>
-          <li class="rv" style="--i:3"><b>الخطوة الثالثة:</b>
-            الثبات والتكرار: حافظ على هذه الوضعية لمدة 20 إلى 30 ثانية مع التنفس بعمق.
-          </li>
-        </ol>
-        <div class="chips rv" style="--i:4"><b>التكرار: 3 مرات</b><b>الثبات: 30 ثانية</b></div>
+      <div class="head">
+        <h2 class="rv" style="--i:0" data-i18n="e2.title">التمرين الثاني: تمديد عضلات اليد الباسطة</h2>
       </div>
-      <div class="media rv cover-img" style="--i:1"><img src="assets\001-Wrist_and_Fingers_Extensors_Stretch.gif"
+      <div class="text">
+        <ol class="steps">
+          <li class="rv" style="--i:1" data-i18n="e2.s1"><b>الخطوة الأولى:</b> مدّ ذراعك: ارفع ذراعك بشكل مستقيم أمام
+            جسمك بمستوى الكتف، مع الحفاظ على استقامة المرفق تماماً وجعل راحة كفك متجهة للأسفل نحو الأرض.</li>
+          <li class="rv" style="--i:2" data-i18n="e2.s2"><b>الخطوة الثانية:</b> اثنِ معصمك لأسفل: استخدم يدك الأخرى
+            للإمساك بظهر اليد الممدودة (أو الأصابع)، ثم اضغط عليها بلطف للأسفل وللداخل باتجاه جسمك.</li>
+          <li class="rv" style="--i:3" data-i18n="e2.s3"><b>الخطوة الثالثة:</b> الثبات والتكرار: حافظ على هذه الوضعية
+            لمدة 20 إلى 30 ثانية مع التنفس بعمق.</li>
+        </ol>
+        <div class="chips rv" style="--i:4"><b data-i18n="chip.rep3">التكرار: 3 مرات</b><b
+            data-i18n="chip.hold30">الثبات: 30 ثانية</b></div>
+      </div>
+      <div class="media rv cover-img" style="--i:1"><img src="assets/001-Wrist_and_Fingers_Extensors_Stretch.gif"
           alt=""></div>
     </div>
   </section>
 
-  <section class="slide alt exercise flip" data-label="التمرين 3">
+  <section class="slide alt exercise flip" data-label="التمرين 3" data-i18n-label="lbl.ex3">
     <div class="inner">
+      <div class="head">
+        <h2 class="rv" style="--i:0" data-i18n="e3.title">التمرين الثالث: انزلاق العصب الأوسط</h2>
+      </div>
       <div class="text">
-        <h2 class="rv" style="--i:0">التمرين الثالث: انزلاق العصب المتوسط.</h2>
         <ol class="steps">
-          <li class="rv" style="--i:1">الخطوة الأولى: إرقع الكف بشكل مستقيم وكرر الحراكت مع الفيديو.</li>
-          <li class="rv" style="--i:2">الخطوة الثانية: اغلق الأصابع فقط مرتين متتاليتين.</li>
-          <li class="rv" style="--i:3">الخطوة الثالثة: اثني الأصابع مع ابقاء الأصراف في وضعية مستقيمة.</li>
-          <li class="rv" style="--i:4">الخطوة الثالثة: اغلق قبضتك مع ابقاء الإبهام في بشكل مستقيم.</li>
+          <li class="rv" style="--i:1" data-i18n="e3.s1">الخطوة الأولى: ارفع الكف بشكل مستقيم وكرر الحركات مع الفيديو.
+          </li>
+          <li class="rv" style="--i:2" data-i18n="e3.s2">الخطوة الثانية: أغلق الأصابع فقط مرتين متتاليتين.</li>
+          <li class="rv" style="--i:3" data-i18n="e3.s3">الخطوة الثالثة: اثنِ الأصابع مع إبقاء الأطراف في وضعية مستقيمة.
+          </li>
+          <li class="rv" style="--i:4" data-i18n="e3.s4">الخطوة الرابعة: أغلق قبضتك مع إبقاء الإبهام بشكل مستقيم.</li>
         </ol>
-        <div class="chips rv" style="--i:4"><b>الوقت: 30 ثانية</b></div>
+        <div class="chips rv" style="--i:5"><b data-i18n="chip.time30">الوقت: 30 ثانية</b></div>
       </div>
       <div class="media rv" style="--i:1">
         <video controls muted loop playsinline preload="metadata" poster="">
-          <source src="assets\cts exercise 3.mov" type="video/mp4">
-          متصفحك لا يدعم تشغيل الفيديو.
+          <source src="assets/cts exercise 3.mov" type="video/mp4">
+          <span data-i18n="video.fallback">متصفحك لا يدعم تشغيل الفيديو.</span>
         </video>
       </div>
     </div>
   </section>
 
-  <!-- القسم 8: التذييل -->
-  <section class="slide footer" data-label="الختام">
+
+  <section class="slide footer" data-label="الختام" data-i18n-label="lbl.end">
     <div class="inner">
-      <div class="logo-slot rv" style="--i:0"><span>الشعار</span><img src="assets\primary-logo-white.png"
-          alt="شعار مراكز الرعاية الصحية الأولية">
-      </div>
-      <p class="rv" style="--i:1">عزيزي المريض، إذا لم تشعر بأي تحسن في حالتك، يرجى زيارة الطبيب للاطمئنان. مع تمنياتنا
-        لك بالشفاء العاجل.</p>
-      <p class="contact rv" style="--i:2">خدمات العلاج الطبيعي | فريق الاصدارات</p>
+      <div class="logo-slot rv" style="--i:0"><img src="assets/primary-logo-white.png"
+          alt="شعار مراكز الرعاية الصحية الأولية" data-i18n-alt="logo.alt"></div>
+      <p class="rv" style="--i:1" data-i18n="ft.msg">عزيزي المريض، إذا لم تشعر بأي تحسن في حالتك، يرجى زيارة الطبيب
+        للاطمئنان. مع تمنياتنا لك بالشفاء العاجل.</p>
+      <p class="contact rv" style="--i:2" data-i18n="ft.contact">خدمات العلاج الطبيعي | فريق الإصدارات</p>
     </div>
   </section>
 
   <script>
+    var T = {
+      en: {
+        "doc.title": "Home Program for Carpal Tunnel Syndrome | Primary Healthcare Centres",
+        "nav.label": "Navigate between sections",
+        "lbl.cover": "Cover", "lbl.intro": "Overview", "lbl.interval": "Home program", "lbl.support": "Wrist support", "lbl.cold": "Cold packs", "lbl.ex1": "Exercise 1", "lbl.ex2": "Exercise 2", "lbl.ex3": "Exercise 3", "lbl.end": "Closing",
+        "logo.alt": "Primary Healthcare Centres logo",
+        "hero.title": "Carpal Tunnel Syndrome", "hero.sub": "Physiotherapy Services",
+        "s2.title": "What is carpal tunnel syndrome?",
+        "s2.p1": "Symptoms appear in the hand, such as pain, tingling or numbness, caused by pressure on the median nerve as it passes through the carpal tunnel in the wrist joint.",
+        "s2.p2": "The risk increases with overuse of the hand, such as manual work and typing on a computer. It is also higher in pregnant women, people with diabetes, people who are overweight (obesity), and for other reasons.",
+        "s2.p3": "It is advisable to assess the nature of your manual work and try to adjust or reduce it in a way that lessens the effort and excess strain on the hand.",
+        "s2.p4": "Take breaks while doing manual work.",
+        "s2.p5": "Wearing a resting splint can help prevent symptoms that occur at night. It can also be useful if your symptoms appear during certain activities.",
+        "s2.alt": "Pain areas in carpal tunnel syndrome",
+        "iv.title": "Home Program for Carpal Tunnel Syndrome",
+        "s3.title": "Wrist Support Specifications",
+        "s3.p1": "Helps in treating carpal tunnel syndrome.",
+        "s3.p2": "Adjustable straps that are easy to put on.",
+        "s3.p3": "The back of the hand is flexible, so the support and its stiffness are easy to control. You can therefore remove the support during the day and put it on at bedtime.",
+        "s3.p4": "The support size depends on the measurement of your wrist circumference.",
+        "s3.p5": "Make sure the wrist support is made for the correct hand, left or right.",
+        "s3.alt": "Wrist support",
+        "s4.title": "Using Cold Packs",
+        "s4.p1": "Wrap the pack in a small towel.",
+        "s4.p2": "Apply it for 10 to 20 minutes, and repeat every two to three hours if possible.",
+        "s4.p3": "Do not place ice directly on the skin of the hand or wrist.",
+        "s4.p4": "For ice massage, rub the wrist and palm area directly with a piece of ice for two to three minutes on a small area and five minutes on larger areas.",
+        "s4.p5": "Use cold therapy as soon as pain or swelling appears in the wrist.",
+        "s4.p6": "For best results, keep the affected hand raised.",
+        "s4.alt": "Cold packs",
+        "e1.title": "Exercise 1: Hand Flexor Muscle Stretch",
+        "e1.s1": "<b>Step 1:</b> Extend your arm: raise your arm straight in front of your body at shoulder level, keeping your elbow fully straight and your palm facing up toward the ceiling.",
+        "e1.s2": "<b>Step 2:</b> Pull your fingers back: use your other hand to hold the fingers of the extended hand, then gently pull them down and back toward your body to stretch the wrist.",
+        "e1.s3": "<b>Step 3:</b> Hold and repeat: hold this position for 20 to 30 seconds while breathing deeply.",
+        "e2.title": "Exercise 2: Hand Extensor Muscle Stretch",
+        "e2.s1": "<b>Step 1:</b> Extend your arm: raise your arm straight in front of your body at shoulder level, keeping your elbow fully straight and your palm facing down toward the floor.",
+        "e2.s2": "<b>Step 2:</b> Bend your wrist down: use your other hand to hold the back of the extended hand (or the fingers), then gently press it down and inward toward your body.",
+        "e2.s3": "<b>Step 3:</b> Hold and repeat: hold this position for 20 to 30 seconds while breathing deeply.",
+        "chip.rep3": "Repetitions: 3 times", "chip.hold30": "Hold: 30 seconds", "chip.time30": "Time: 30 seconds",
+        "e3.title": "Exercise 3: Median Nerve Glide",
+        "e3.s1": "Step 1: Raise your hand with the palm straight and repeat the movements shown in the video.",
+        "e3.s2": "Step 2: Close only your fingers, twice in a row.",
+        "e3.s3": "Step 3: Bend your fingers while keeping the fingertips straight.",
+        "e3.s4": "Step 4: Close your fist while keeping your thumb straight.",
+        "video.fallback": "Your browser does not support video playback.",
+        "ft.msg": "Dear patient, if you do not feel any improvement in your condition, please visit your doctor for reassurance. We wish you a speedy recovery.",
+        "ft.contact": "Physiotherapy Services | Publications Team",
+        "lbl.hot": "Hot packs",
+        "s4.when": "<b>When to use it:</b> Best for sudden pain (acute irritation), when there is inflammation, or when the wrist looks warm, swollen or irritated after repetitive activities.",
+        "s5.title": "Using Hot Packs",
+        "s5.when": "<b>When to use it:</b> Best for chronic, persistent pain, stiffness and rigidity, or when the muscles and tendons of the hand and wrist feel tight.",
+        "s5.p1": "Use it for 15 to 20 minutes only.",
+        "s5.p2": "You can reuse it every two hours.",
+        "s5.p3": "Wrap the pack in a dry towel and place it on your hand and wrist.",
+        "s5.p4": "You can also soak your hand in warm water for 15 minutes to ease stiffness related to carpal tunnel syndrome.",
+        "s5.alt": "Hot packs"
+      },
+      hi: {
+        "doc.title": "कार्पल टनल सिंड्रोम के लिए घरेलू कार्यक्रम | प्राथमिक स्वास्थ्य देखभाल केंद्र",
+        "nav.label": "अनुभागों के बीच नेविगेट करें",
+        "lbl.cover": "मुखपृष्ठ", "lbl.intro": "परिचय", "lbl.interval": "घरेलू कार्यक्रम", "lbl.support": "कलाई सपोर्ट", "lbl.cold": "ठंडी सिकाई", "lbl.ex1": "व्यायाम 1", "lbl.ex2": "व्यायाम 2", "lbl.ex3": "व्यायाम 3", "lbl.end": "समापन",
+        "logo.alt": "प्राथमिक स्वास्थ्य देखभाल केंद्र का लोगो",
+        "hero.title": "कार्पल टनल सिंड्रोम", "hero.sub": "फिजियोथेरेपी सेवाएँ",
+        "s2.title": "कार्पल टनल सिंड्रोम क्या है?",
+        "s2.p1": "इसके लक्षण हाथ में दर्द, झुनझुनी या सुन्नपन के रूप में दिखाई देते हैं। यह कलाई के जोड़ में कार्पल टनल से गुजरने वाली मीडियन नर्व (मध्य तंत्रिका) पर पड़ने वाले दबाव के कारण होता है।",
+        "s2.p2": "हाथ के अत्यधिक उपयोग से, जैसे हाथ से किए जाने वाले काम और कंप्यूटर पर टाइपिंग, इसका जोखिम बढ़ जाता है। गर्भवती महिलाओं, मधुमेह के रोगियों, अधिक वज़न (मोटापे) वाले लोगों में तथा अन्य कारणों से भी यह जोखिम बढ़ता है।",
+        "s2.p3": "अपने हाथ के काम की प्रकृति का आकलन करना और उसे इस तरह बदलना या कम करना उचित है कि हाथ पर पड़ने वाला श्रम और अतिरिक्त दबाव घटे।",
+        "s2.p4": "हाथ से काम करते समय बीच-बीच में आराम करें।",
+        "s2.p5": "आराम वाला स्प्लिंट पहनने से रात में होने वाले लक्षणों को रोकने में मदद मिल सकती है। यदि कुछ गतिविधियों के दौरान आपके लक्षण उभरते हैं, तब भी यह उपयोगी हो सकता है।",
+        "s2.alt": "कार्पल टनल सिंड्रोम में दर्द के क्षेत्र",
+        "iv.title": "कार्पल टनल सिंड्रोम के लिए घरेलू कार्यक्रम",
+        "s3.title": "कलाई सपोर्ट की विशेषताएँ",
+        "s3.p1": "कार्पल टनल सिंड्रोम के उपचार में मदद करता है।",
+        "s3.p2": "एडजस्टेबल पट्टियाँ, जिन्हें पहनना आसान है।",
+        "s3.p3": "हाथ का पिछला हिस्सा लचीला है, इसलिए सपोर्ट और उसकी कठोरता को नियंत्रित करना आसान है। इसलिए आप दिन में सपोर्ट उतार सकते हैं और सोते समय पहन सकते हैं।",
+        "s3.p4": "सपोर्ट का आकार कलाई के घेरे की माप पर निर्भर करता है।",
+        "s3.p5": "सुनिश्चित करें कि कलाई सपोर्ट सही हाथ के लिए है, बाएँ या दाएँ।",
+        "s3.alt": "कलाई सपोर्ट",
+        "s4.title": "ठंडी सिकाई का उपयोग",
+        "s4.p1": "कोल्ड पैक को एक छोटे तौलिये में लपेटें।",
+        "s4.p2": "इसे 10 से 20 मिनट तक लगाएँ, और संभव हो तो हर दो से तीन घंटे में दोहराएँ।",
+        "s4.p3": "बर्फ को हाथ या कलाई की त्वचा पर सीधे न रखें।",
+        "s4.p4": "बर्फ से मालिश करते समय, कलाई और हथेली के हिस्से पर बर्फ के टुकड़े को सीधे रगड़ें: छोटे क्षेत्र पर दो से तीन मिनट और बड़े क्षेत्रों पर पाँच मिनट।",
+        "s4.p5": "कलाई में दर्द या सूजन शुरू होते ही ठंडी सिकाई करें।",
+        "s4.p6": "बेहतर परिणाम के लिए प्रभावित हाथ को ऊपर उठाकर रखें।",
+        "s4.alt": "कोल्ड पैक",
+        "e1.title": "व्यायाम 1: हाथ की फ्लेक्सर (मोड़ने वाली) मांसपेशियों का स्ट्रेच",
+        "e1.s1": "<b>पहला चरण:</b> बाँह सीधी करें: अपनी बाँह को शरीर के सामने कंधे की ऊँचाई तक सीधा उठाएँ, कोहनी को पूरी तरह सीधा रखें और हथेली को छत की ओर ऊपर रखें।",
+        "e1.s2": "<b>दूसरा चरण:</b> उँगलियों को पीछे खींचें: दूसरे हाथ से फैले हुए हाथ की उँगलियों को पकड़ें, फिर कलाई में खिंचाव लाने के लिए उन्हें धीरे से नीचे और अपने शरीर की ओर पीछे खींचें।",
+        "e1.s3": "<b>तीसरा चरण:</b> रुकें और दोहराएँ: गहरी साँस लेते हुए इस स्थिति में 20 से 30 सेकंड तक रुकें।",
+        "e2.title": "व्यायाम 2: हाथ की एक्सटेंसर (फैलाने वाली) मांसपेशियों का स्ट्रेच",
+        "e2.s1": "<b>पहला चरण:</b> बाँह सीधी करें: अपनी बाँह को शरीर के सामने कंधे की ऊँचाई तक सीधा उठाएँ, कोहनी को पूरी तरह सीधा रखें और हथेली को ज़मीन की ओर नीचे रखें।",
+        "e2.s2": "<b>दूसरा चरण:</b> कलाई को नीचे मोड़ें: दूसरे हाथ से फैले हुए हाथ के पिछले हिस्से (या उँगलियों) को पकड़ें, फिर उसे धीरे से नीचे और अपने शरीर की ओर भीतर की तरफ दबाएँ।",
+        "e2.s3": "<b>तीसरा चरण:</b> रुकें और दोहराएँ: गहरी साँस लेते हुए इस स्थिति में 20 से 30 सेकंड तक रुकें।",
+        "chip.rep3": "दोहराव: 3 बार", "chip.hold30": "रुकना: 30 सेकंड", "chip.time30": "समय: 30 सेकंड",
+        "e3.title": "व्यायाम 3: मीडियन नर्व ग्लाइड (मध्य तंत्रिका की सरकन)",
+        "e3.s1": "पहला चरण: हथेली को सीधा उठाएँ और वीडियो के अनुसार गतिविधियाँ दोहराएँ।",
+        "e3.s2": "दूसरा चरण: केवल उँगलियाँ लगातार दो बार बंद करें।",
+        "e3.s3": "तीसरा चरण: उँगलियों के सिरों को सीधा रखते हुए उँगलियाँ मोड़ें।",
+        "e3.s4": "चौथा चरण: अँगूठे को सीधा रखते हुए अपनी मुट्ठी बंद करें।",
+        "video.fallback": "आपका ब्राउज़र वीडियो चलाने का समर्थन नहीं करता।",
+        "ft.msg": "प्रिय मरीज़, यदि आपको अपनी स्थिति में कोई सुधार महसूस नहीं होता है, तो कृपया तसल्ली के लिए डॉक्टर से मिलें। हम आपके शीघ्र स्वस्थ होने की कामना करते हैं।",
+        "ft.contact": "फिजियोथेरेपी सेवाएँ | प्रकाशन टीम",
+        "lbl.hot": "गर्म सिकाई",
+        "s4.when": "<b>कब उपयोग करें:</b> अचानक उठने वाले दर्द (तीव्र जलन) में, सूजन या प्रदाह होने पर, या बार-बार दोहराई जाने वाली गतिविधियों के बाद कलाई के गर्म, सूजे हुए या चिढ़े हुए दिखने पर यह सबसे उपयुक्त है।",
+        "s5.title": "गर्म सिकाई का उपयोग",
+        "s5.when": "<b>कब उपयोग करें:</b> लंबे समय से बने रहने वाले (पुराने) दर्द, अकड़न और कठोरता में, या जब हाथ और कलाई की मांसपेशियाँ और टेंडन (कंडराएँ) कसे हुए महसूस हों, तब यह सबसे उपयुक्त है।",
+        "s5.p1": "इसे केवल 15 से 20 मिनट तक लगाएँ।",
+        "s5.p2": "इसे हर दो घंटे में दोबारा इस्तेमाल किया जा सकता है।",
+        "s5.p3": "पैक को सूखे तौलिये में लपेटकर हाथ और कलाई पर रखें।",
+        "s5.p4": "कार्पल टनल सिंड्रोम से जुड़ी अकड़न कम करने के लिए आप अपने हाथ को 15 मिनट तक गुनगुने पानी में भी डुबो सकते हैं।",
+        "s5.alt": "गर्म सिकाई पैक"
+      },
+      bn: {
+        "doc.title": "কার্পাল টানেল সিন্ড্রোমের হোম প্রোগ্রাম | প্রাথমিক স্বাস্থ্যসেবা কেন্দ্র",
+        "nav.label": "বিভাগগুলোর মধ্যে নেভিগেট করুন",
+        "lbl.cover": "প্রচ্ছদ", "lbl.intro": "পরিচিতি", "lbl.interval": "হোম প্রোগ্রাম", "lbl.support": "কব্জির সাপোর্ট", "lbl.cold": "ঠান্ডা সেঁক", "lbl.ex1": "ব্যায়াম ১", "lbl.ex2": "ব্যায়াম ২", "lbl.ex3": "ব্যায়াম ৩", "lbl.end": "সমাপ্তি",
+        "logo.alt": "প্রাথমিক স্বাস্থ্যসেবা কেন্দ্রের লোগো",
+        "hero.title": "কার্পাল টানেল সিন্ড্রোম", "hero.sub": "ফিজিওথেরাপি সেবা",
+        "s2.title": "কার্পাল টানেল সিন্ড্রোম কী?",
+        "s2.p1": "এর লক্ষণ হাতে প্রকাশ পায়, যেমন ব্যথা, ঝিনঝিন বা অসাড়ভাব। কব্জির জোড়ে কার্পাল টানেলের ভেতর দিয়ে যাওয়া মিডিয়ান নার্ভের (মধ্য স্নায়ু) ওপর চাপ পড়ার কারণে এটি হয়।",
+        "s2.p2": "হাতের অতিরিক্ত ব্যবহারে, যেমন হাতের কাজ ও কম্পিউটারে টাইপিংয়ে, ঝুঁকি বাড়ে। গর্ভবতী নারী, ডায়াবেটিস রোগী, অতিরিক্ত ওজন (স্থূলতা) আছে এমন ব্যক্তি এবং অন্যান্য কারণেও ঝুঁকি বেড়ে যায়।",
+        "s2.p3": "আপনার হাতের কাজের ধরন মূল্যায়ন করা এবং এমনভাবে তা বদলানো বা কমানো উচিত, যাতে হাতের ওপর পরিশ্রম ও বাড়তি চাপ কমে।",
+        "s2.p4": "হাতের কাজ করার সময় মাঝে মাঝে বিশ্রাম নিন।",
+        "s2.p5": "বিশ্রামের স্প্লিন্ট পরলে রাতে হওয়া লক্ষণ প্রতিরোধে সাহায্য হতে পারে। কিছু নির্দিষ্ট কাজ করার সময় লক্ষণ দেখা দিলেও এটি উপকারী হতে পারে।",
+        "s2.alt": "কার্পাল টানেল সিন্ড্রোমে ব্যথার স্থানসমূহ",
+        "iv.title": "কার্পাল টানেল সিন্ড্রোমের হোম প্রোগ্রাম",
+        "s3.title": "কব্জির সাপোর্টের বৈশিষ্ট্য",
+        "s3.p1": "কার্পাল টানেল সিন্ড্রোমের চিকিৎসায় সহায়তা করে।",
+        "s3.p2": "সমন্বয়যোগ্য ফিতা, যা পরা সহজ।",
+        "s3.p3": "হাতের পিঠের অংশ নমনীয়, তাই সাপোর্ট এবং তার শক্ত ভাব নিয়ন্ত্রণ করা সহজ। তাই আপনি দিনের বেলা সাপোর্ট খুলে রাখতে পারেন এবং ঘুমানোর সময় পরতে পারেন।",
+        "s3.p4": "সাপোর্টের মাপ কব্জির বেড়ের মাপের ওপর নির্ভর করে।",
+        "s3.p5": "নিশ্চিত করুন যে কব্জির সাপোর্টটি সঠিক হাতের জন্য, বাঁ হাত নাকি ডান হাত।",
+        "s3.alt": "কব্জির সাপোর্ট",
+        "s4.title": "ঠান্ডা সেঁক ব্যবহার",
+        "s4.p1": "কোল্ড প্যাকটি একটি ছোট তোয়ালেতে মুড়িয়ে নিন।",
+        "s4.p2": "১০ থেকে ২০ মিনিট ব্যবহার করুন, সম্ভব হলে প্রতি দুই থেকে তিন ঘণ্টা পরপর আবার ব্যবহার করুন।",
+        "s4.p3": "হাত বা কব্জির ত্বকে সরাসরি বরফ রাখবেন না।",
+        "s4.p4": "বরফ দিয়ে ম্যাসাজ করার সময় কব্জি ও তালুর অংশে সরাসরি বরফের টুকরো ঘষুন: ছোট জায়গায় দুই থেকে তিন মিনিট এবং বড় জায়গায় পাঁচ মিনিট।",
+        "s4.p5": "কব্জিতে ব্যথা বা ফোলা দেখা দিলেই ঠান্ডা সেঁক ব্যবহার করুন।",
+        "s4.p6": "সেরা ফল পেতে আক্রান্ত হাতটি উঁচু করে রাখুন।",
+        "s4.alt": "কোল্ড প্যাক",
+        "e1.title": "ব্যায়াম ১: হাতের ফ্লেক্সর (ভাঁজকারী) পেশির স্ট্রেচ",
+        "e1.s1": "<b>প্রথম ধাপ:</b> হাত সামনে বাড়ান: আপনার হাত শরীরের সামনে কাঁধের সমান উচ্চতায় সোজা তুলুন, কনুই পুরোপুরি সোজা রাখুন এবং হাতের তালু ছাদের দিকে ওপরমুখী রাখুন।",
+        "e1.s2": "<b>দ্বিতীয় ধাপ:</b> আঙুলগুলো পেছনে টানুন: অন্য হাত দিয়ে প্রসারিত হাতের আঙুলগুলো ধরুন, তারপর কব্জিতে টান অনুভব করতে আঙুলগুলো আলতো করে নিচের দিকে ও আপনার শরীরের দিকে টানুন।",
+        "e1.s3": "<b>তৃতীয় ধাপ:</b> স্থির থাকুন ও পুনরাবৃত্তি করুন: গভীরভাবে শ্বাস নিতে নিতে এই অবস্থানে ২০ থেকে ৩০ সেকেন্ড থাকুন।",
+        "e2.title": "ব্যায়াম ২: হাতের এক্সটেনসর (প্রসারণকারী) পেশির স্ট্রেচ",
+        "e2.s1": "<b>প্রথম ধাপ:</b> হাত সামনে বাড়ান: আপনার হাত শরীরের সামনে কাঁধের সমান উচ্চতায় সোজা তুলুন, কনুই পুরোপুরি সোজা রাখুন এবং হাতের তালু মেঝের দিকে নিচমুখী রাখুন।",
+        "e2.s2": "<b>দ্বিতীয় ধাপ:</b> কব্জি নিচের দিকে বাঁকান: অন্য হাত দিয়ে প্রসারিত হাতের পিঠ (বা আঙুল) ধরুন, তারপর আলতো করে নিচের দিকে এবং আপনার শরীরের ভেতরের দিকে চাপ দিন।",
+        "e2.s3": "<b>তৃতীয় ধাপ:</b> স্থির থাকুন ও পুনরাবৃত্তি করুন: গভীরভাবে শ্বাস নিতে নিতে এই অবস্থানে ২০ থেকে ৩০ সেকেন্ড থাকুন।",
+        "chip.rep3": "পুনরাবৃত্তি: ৩ বার", "chip.hold30": "ধরে রাখা: ৩০ সেকেন্ড", "chip.time30": "সময়: ৩০ সেকেন্ড",
+        "e3.title": "ব্যায়াম ৩: মিডিয়ান নার্ভ গ্লাইড (মধ্য স্নায়ুর চলন)",
+        "e3.s1": "প্রথম ধাপ: হাতের তালু সোজা করে তুলুন এবং ভিডিওর সঙ্গে নড়াচড়াগুলো পুনরাবৃত্তি করুন।",
+        "e3.s2": "দ্বিতীয় ধাপ: শুধু আঙুলগুলো পরপর দুইবার বন্ধ করুন।",
+        "e3.s3": "তৃতীয় ধাপ: আঙুলের ডগা সোজা রেখে আঙুলগুলো ভাঁজ করুন।",
+        "e3.s4": "চতুর্থ ধাপ: বুড়ো আঙুল সোজা রেখে মুঠো বন্ধ করুন।",
+        "video.fallback": "আপনার ব্রাউজার ভিডিও চালানো সমর্থন করে না।",
+        "ft.msg": "প্রিয় রোগী, আপনার অবস্থার কোনো উন্নতি অনুভব না করলে, নিশ্চিন্ত হতে অনুগ্রহ করে ডাক্তারের কাছে যান। আপনার দ্রুত আরোগ্য কামনা করি।",
+        "ft.contact": "ফিজিওথেরাপি সেবা | প্রকাশনা দল",
+        "lbl.hot": "গরম সেঁক",
+        "s4.when": "<b>কখন ব্যবহার করবেন:</b> হঠাৎ ব্যথা (তীব্র জ্বালা) হলে, প্রদাহ থাকলে, অথবা বারবার একই কাজ করার পর কব্জি গরম, ফোলা বা জ্বালাপোড়াযুক্ত মনে হলে এটি সবচেয়ে উপযোগী।",
+        "s5.title": "গরম সেঁক ব্যবহার",
+        "s5.when": "<b>কখন ব্যবহার করবেন:</b> দীর্ঘদিনের স্থায়ী ব্যথা, আড়ষ্টতা ও শক্তভাব থাকলে, অথবা হাত ও কব্জির পেশি ও টেন্ডন টানটান মনে হলে এটি সবচেয়ে উপযোগী।",
+        "s5.p1": "মাত্র ১৫ থেকে ২০ মিনিট ব্যবহার করুন।",
+        "s5.p2": "প্রতি দুই ঘণ্টা পরপর আবার ব্যবহার করা যায়।",
+        "s5.p3": "প্যাকটি শুকনো তোয়ালেতে মুড়িয়ে হাত ও কব্জির ওপর রাখুন।",
+        "s5.p4": "কার্পাল টানেল সিন্ড্রোমজনিত আড়ষ্টতা কমাতে আপনি ১৫ মিনিট হাত কুসুম গরম পানিতে ডুবিয়েও রাখতে পারেন।",
+        "s5.alt": "গরম সেঁকের প্যাক"
+      }
+    };
+    var DIR = { ar: 'rtl', en: 'ltr', hi: 'ltr', bn: 'ltr' };
+
     (function () {
       var slides = [].slice.call(document.querySelectorAll('.slide'));
       var dots = document.getElementById('dots');
       var bar = document.getElementById('progress');
+      var langBtns = [].slice.call(document.querySelectorAll('.lang button'));
+      var texts = [].slice.call(document.querySelectorAll('[data-i18n]'));
+      var alts = [].slice.call(document.querySelectorAll('[data-i18n-alt]'));
+      var arTitle = document.title;
+      var arNav = dots.getAttribute('aria-label');
+
+      // حفظ النص العربي الأصلي لاسترجاعه عند الرجوع للعربية
+      texts.forEach(function (n) { n._ar = n.innerHTML });
+      alts.forEach(function (n) { n._ar = n.getAttribute('alt') });
+      slides.forEach(function (s) { s._ar = s.dataset.label });
+
+      function tr(lang, key, fallback) {
+        var d = T[lang];
+        return (d && d[key] != null) ? d[key] : fallback;
+      }
+      function labelOf(s, i, lang) {
+        return tr(lang, s.dataset.i18nLabel, s._ar) || ('#' + (i + 1));
+      }
 
       slides.forEach(function (s, i) {
         var b = document.createElement('button');
-        b.setAttribute('aria-label', s.dataset.label || ('القسم ' + (i + 1)));
-        b.title = s.dataset.label || '';
         b.onclick = function () { s.scrollIntoView({ behavior: 'smooth' }) };
         dots.appendChild(b);
       });
       var btns = [].slice.call(dots.children);
+
+      function current() {
+        var c = 0, m = 1e9;
+        slides.forEach(function (s, i) { var d = Math.abs(s.getBoundingClientRect().top); if (d < m) { m = d; c = i } });
+        return c;
+      }
+
+      function setLang(lang, user) {
+        if (!DIR[lang]) lang = 'ar';
+        var keep = user ? current() : -1;
+        var html = document.documentElement;
+        html.lang = lang; html.dir = DIR[lang];
+        document.title = tr(lang, 'doc.title', arTitle);
+        dots.setAttribute('aria-label', tr(lang, 'nav.label', arNav));
+        texts.forEach(function (n) { n.innerHTML = tr(lang, n.dataset.i18n, n._ar) });
+        alts.forEach(function (n) { n.setAttribute('alt', tr(lang, n.dataset.i18nAlt, n._ar)) });
+        slides.forEach(function (s, i) {
+          var l = labelOf(s, i, lang);
+          s.dataset.label = l;
+          btns[i].setAttribute('aria-label', l);
+          btns[i].title = l;
+        });
+        langBtns.forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.lang === lang) });
+        try { localStorage.setItem('phc-lang', lang) } catch (e) { }
+        try { var u = new URL(location.href); u.searchParams.set('lang', lang); history.replaceState(null, '', u) } catch (e) { }
+        if (keep > -1) slides[keep].scrollIntoView({ behavior: 'instant' });
+      }
+
+      langBtns.forEach(function (b) { b.onclick = function () { setLang(b.dataset.lang, true) } });
+
+      var start = 'ar';
+      try { start = new URLSearchParams(location.search).get('lang') || localStorage.getItem('phc-lang') || 'ar' } catch (e) { }
+      setLang(start, false);
 
       var io = new IntersectionObserver(function (entries) {
         entries.forEach(function (e) {
@@ -781,12 +1078,8 @@
       }
       addEventListener('scroll', prog, { passive: true }); prog();
 
-      function current() {
-        var c = 0, m = 1e9;
-        slides.forEach(function (s, i) { var d = Math.abs(s.getBoundingClientRect().top); if (d < m) { m = d; c = i } });
-        return c;
-      }
       addEventListener('keydown', function (e) {
+        if (e.target.closest && e.target.closest('button, video, a, input')) return;
         var k = e.key, i = current();
         if (k === 'ArrowDown' || k === 'PageDown' || k === ' ') { e.preventDefault(); slides[Math.min(i + 1, slides.length - 1)].scrollIntoView({ behavior: 'smooth' }) }
         if (k === 'ArrowUp' || k === 'PageUp') { e.preventDefault(); slides[Math.max(i - 1, 0)].scrollIntoView({ behavior: 'smooth' }) }
