@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>البرنامج المنزلي لمتلازمة النفق الرسغي | مراكز الرعاية الصحية الأولية</title>
+  <!-- الخط الاحتياطي فقط: الدليل يعتمد Frutiger LT Arabic للمحتوى الرقمي، ويُستخدم هذا الخط إذا لم يكن متوفراً على الجهاز -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* ===== هوية مراكز الرعاية الصحية الأولية ===== */
+    :root {
+      --navy: #3D4A6D;
+      /* اللون الرئيسي 1 */
+      --green: #81B199;
+      /* اللون الرئيسي 2 */
+      --green-deep: #4C8E78;
+      /* فرعي */
+      --blue: #4A6AAF;
+      /* فرعي */
+      --sand: #AD9B73;
+      /* فرعي */
+      --red: #C16363;
+      /* فرعي */
+      --paper: #F0F2F1;
+      /* خلفية الدليل */
+      --ink: #2B3450;
+      --font: 'Frutiger LT Arabic', 'Sakkal Majalla', 'Tajawal', 'Segoe UI', Tahoma, sans-serif;
+
+      /* ضع صورة الخلفية هنا، مثال: url('hero.jpg') */
+      --hero-bg: none;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-snap-type: y proximity
+    }
+
+    body {
+      font-family: var(--font);
+      color: var(--ink);
+      background: var(--paper);
+      line-height: 1.8;
+      font-size: clamp(1.05rem, 1.2vw + .7rem, 1.35rem);
+      overflow-x: hidden
+    }
+
+    img {
+      max-width: 100%;
+      display: block
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--blue);
+      outline-offset: 3px
+    }
+
+    /* ===== الشرائح ===== */
+    .slide {
+      min-height: 100svh;
+      scroll-snap-align: start;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(4.5rem, 8vw, 6rem) clamp(1.25rem, 6vw, 6rem);
+      position: relative;
+      overflow: hidden
+    }
+
+    .inner {
+      width: min(1180px, 100%);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(2rem, 5vw, 5rem);
+      align-items: center
+    }
+
+    .slide.flip .inner .media {
+      order: -1
+    }
+
+    h1,
+    h2 {
+      color: var(--navy);
+      line-height: 1.3;
+      font-weight: 800
+    }
+
+    h1 {
+      font-size: clamp(2.2rem, 5.5vw, 4.4rem)
+    }
+
+    h2 {
+      font-size: clamp(1.8rem, 3.6vw, 3rem);
+      margin-bottom: 1.5rem;
+      padding-inline-start: 1rem;
+      border-inline-start: 6px solid var(--green)
+    }
+
+    /* ===== الصور (نص بديل حتى تضيف صورتك) ===== */
+    .media {
+      position: relative;
+      aspect-ratio: 4/3;
+      border-radius: 18px 18px 18px 90px;
+      background: #fff;
+      border: 2px dashed var(--green);
+      display: grid;
+      place-items: center;
+      color: var(--navy);
+      text-align: center;
+      font-size: 1rem;
+      overflow: hidden;
+      box-shadow: 18px 18px 0 -2px var(--green)
+    }
+
+    .media::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      inset-inline: 0;
+      height: 14px;
+      background: var(--navy);
+      z-index: 2
+    }
+
+    .media img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      z-index: 1
+    }
+
+    .media.cover-img img {
+      object-fit: cover;
+    }
+
+    .media video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      z-index: 1;
+      background: #000
+    }
+
+    .media img[src=""],
+    .media img:not([src]) {
+      display: none
+    }
+
+    .media span {
+      padding: 1rem
+    }
+
+    /* ===== القوائم ===== */
+    .points {
+      list-style: none
+    }
+
+    .points li {
+      position: relative;
+      padding: .7rem 2rem .7rem 0;
+      border-bottom: 1px solid rgba(61, 74, 109, .15)
+    }
+
+    .points li:last-child {
+      border-bottom: 0
+    }
+
+    .points li::before {
+      content: "";
+      position: absolute;
+      inset-inline-start: 0;
+      top: 1.3rem;
+      width: .85rem;
+      height: .85rem;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 0 4px rgba(129, 177, 153, .3)
+    }
+
+    .points li {
+      padding-inline-start: 2rem;
+      padding-inline-end: 0
+    }
+
+    /* ===== 1) الغلاف ===== */
+    .hero {
+      background: linear-gradient(rgba(61, 74, 109, .88), rgba(61, 74, 109, .94)), var(--hero-bg) center/cover, var(--navy);
+      color: #fff;
+      text-align: center
+    }
+
+    .hero .inner {
+      display: block
+    }
+
+    .hero h1 {
+      color: #fff;
+      margin-top: 2.2rem;
+      max-width: 20ch;
+      margin-inline: auto
+    }
+
+    .hero p {
+      color: var(--green);
+      font-weight: 500;
+      margin-top: 1rem
+    }
+
+    .logo-slot {
+      position: relative;
+      width: clamp(150px, 20vw, 240px);
+      aspect-ratio: 1/1.05;
+      margin-inline: auto;
+      display: grid;
+      place-items: center;
+      /* border: 2px dashed rgba(255, 255, 255, .5); */
+      border-radius: 14px;
+      font-size: .95rem;
+      color: #fff
+    }
+
+    .logo-slot img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain
+    }
+
+    .logo-slot img[src=""],
+    .logo-slot img:not([src]) {
+      display: none
+    }
+
+    .hero .logo-slot {
+      animation: logoIn 1.2s cubic-bezier(.2, .8, .2, 1) both
+    }
+
+    .hero h1 {
+      animation: titleIn 1s .45s cubic-bezier(.2, .8, .2, 1) both
+    }
+
+    .hero p {
+      animation: titleIn 1s .7s cubic-bezier(.2, .8, .2, 1) both
+    }
+
+    @keyframes logoIn {
+      from {
+        opacity: 0;
+        transform: scale(.7)
+      }
+
+      to {
+        opacity: 1;
+        transform: none
+      }
+    }
+
+    @keyframes titleIn {
+      from {
+        opacity: 0;
+        transform: translateY(26px)
+      }
+
+      to {
+        opacity: 1;
+        transform: none
+      }
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 1.6rem;
+      inset-inline: 0;
+      margin-inline: auto;
+      width: 28px;
+      height: 46px;
+      border: 2px solid rgba(255, 255, 255, .7);
+      border-radius: 16px
+    }
+
+    .scroll-hint::after {
+      content: "";
+      position: absolute;
+      top: 8px;
+      left: 50%;
+      width: 4px;
+      height: 8px;
+      margin-left: -2px;
+      border-radius: 2px;
+      background: var(--green);
+      animation: wheel 1.6s infinite
+    }
+
+    @keyframes wheel {
+      0% {
+        opacity: 1;
+        transform: translateY(0)
+      }
+
+      100% {
+        opacity: 0;
+        transform: translateY(16px)
+      }
+    }
+
+    /* ===== الفاصل ===== */
+    .interval {
+      background: var(--green);
+      text-align: center;
+      min-height: 70svh
+    }
+
+    .interval h2 {
+      border: 0;
+      padding: 0;
+      margin: 0;
+      color: var(--navy);
+      font-size: clamp(2rem, 6vw, 4.6rem);
+      max-width: 18ch;
+      margin-inline: auto;
+      position: relative;
+      z-index: 1
+    }
+
+    .ring {
+      position: absolute;
+      border: 2px solid rgba(61, 74, 109, .25);
+      border-radius: 50%;
+      inset-inline: 0;
+      margin-inline: auto;
+      aspect-ratio: 1;
+      animation: pulse 5s ease-in-out infinite
+    }
+
+    .ring:nth-child(1) {
+      width: min(60vw, 520px)
+    }
+
+    .ring:nth-child(2) {
+      width: min(85vw, 780px);
+      animation-delay: 1.2s
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        transform: scale(.92);
+        opacity: .9
+      }
+
+      50% {
+        transform: scale(1.06);
+        opacity: .3
+      }
+    }
+
+    /* ===== الشرائح الداكنة والتمارين ===== */
+    .alt {
+      background: #fff
+    }
+
+    .exercise .steps {
+      counter-reset: s;
+      list-style: none
+    }
+
+    .exercise .steps li {
+      counter-increment: s;
+      position: relative;
+      padding: .6rem 3.2rem .6rem 0
+    }
+
+    .exercise .steps li::before {
+      content: counter(s);
+      position: absolute;
+      inset-inline-start: 0;
+      top: .55rem;
+      width: 2.2rem;
+      height: 2.2rem;
+      border-radius: 50%;
+      background: var(--navy);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      font-size: 1rem
+    }
+
+    .exercise .steps li {
+      padding-inline-start: 3.2rem;
+      padding-inline-end: 0
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .6rem;
+      margin-top: 1.2rem
+    }
+
+    .chips b {
+      background: var(--navy);
+      color: #fff;
+      font-weight: 500;
+      font-size: .95rem;
+      padding: .2rem 1rem;
+      border-radius: 99px
+    }
+
+    .chips b:nth-child(2) {
+      background: var(--green-deep)
+    }
+
+    /* ===== التذييل ===== */
+    .footer {
+      background: var(--navy);
+      color: #fff;
+      text-align: center;
+      min-height: 60svh;
+      min-height: 100svh;
+    }
+
+    .footer .inner {
+      display: block
+    }
+
+    .footer .logo-slot {
+      width: 130px;
+      margin-bottom: 1.6rem
+    }
+
+    .footer p {
+      max-width: 46ch;
+      margin-inline: auto;
+      color: #dfe5f0
+    }
+
+    .footer .contact {
+      margin-top: 1.6rem;
+      color: var(--green);
+      font-weight: 500;
+      direction: ltr
+    }
+
+    /* ===== ظهور المحتوى عند الوصول للشريحة ===== */
+    .slide:not(.hero) .rv {
+      opacity: 0;
+      transition: opacity .8s cubic-bezier(.2, .8, .2, 1), transform .8s cubic-bezier(.2, .8, .2, 1);
+      transition-delay: calc(var(--i, 0)*110ms)
+    }
+
+    .slide:not(.hero) .text.rv {
+      transform: translateX(60px)
+    }
+
+    .slide:not(.hero) .media.rv {
+      transform: translateX(-60px) scale(.96)
+    }
+
+    .slide.flip:not(.hero) .text.rv {
+      transform: translateX(-60px)
+    }
+
+    .slide.flip:not(.hero) .media.rv {
+      transform: translateX(60px) scale(.96)
+    }
+
+    .slide:not(.hero) .points li.rv,
+    .slide:not(.hero) .steps li.rv {
+      transform: translateX(40px)
+    }
+
+    .slide.in .rv {
+      opacity: 1 !important;
+      transform: none !important
+    }
+
+    /* ===== التنقل ===== */
+    .bar {
+      position: fixed;
+      top: 0;
+      inset-inline: 0;
+      height: 5px;
+      background: rgba(61, 74, 109, .15);
+      z-index: 20
+    }
+
+    .bar i {
+      display: block;
+      height: 100%;
+      width: 0;
+      background: var(--green-deep);
+      transition: width .2s
+    }
+
+    .dots {
+      position: fixed;
+      inset-inline-end: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: .7rem;
+      z-index: 20
+    }
+
+    .dots button {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 2px solid var(--navy);
+      background: #fff;
+      cursor: pointer;
+      padding: 0;
+      transition: .3s
+    }
+
+    .dots button.on {
+      background: var(--green);
+      transform: scale(1.5)
+    }
+
+    @media (max-width:860px) {
+      .inner {
+        grid-template-columns: 1fr
+      }
+
+      .slide.flip .inner .media {
+        order: 0
+      }
+
+      .dots {
+        display: none
+      }
+
+      .media {
+        box-shadow: 10px 10px 0 -2px var(--green)
+      }
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+      * {
+        animation: none !important;
+        transition: none !important
+      }
+
+      html {
+        scroll-behavior: auto
+      }
+
+      .slide:not(.hero) .rv {
+        opacity: 1;
+        transform: none !important
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="bar" aria-hidden="true"><i id="progress"></i></div>
+  <nav class="dots" id="dots" aria-label="التنقل بين الأقسام"></nav>
+
+  <!-- القسم 1: الغلاف -->
+  <section class="slide hero" data-label="الغلاف">
+    <div class="inner">
+      <div class="logo-slot">
+        <img src="assets\primary-logo-white.png" alt="شعار مراكز الرعاية الصحية الأولية">
+      </div>
+      <h1>متلازمة النفق الرسغي</h1>
+      <!-- <p>مراكز الرعاية الصحية الأولية</p> -->
+      <p>خدمات العلاج الطبيعي</p>
+    </div>
+    <div class="scroll-hint" aria-hidden="true"></div>
+  </section>
+
+  <!-- القسم 2: صورة + 5 نقاط -->
+  <section class="slide" data-label="التعريف">
+    <div class="inner">
+      <div class="text">
+        <h2 class="rv" style="--i:0">ما هي متلازمة النفق الرسغي؟</h2>
+        <ul class="points">
+          <li class="rv" style="--i:1">
+            عراض تظهر في اليد كالألم و التنمل أو الخدران و ذلك نتيجة للضغض الواقع على العصب الأوسط والذي يمر في القناة
+            الرسغية في مفصل الرسغ.
+          </li>
+          <li class="rv" style="--i:2">
+            تزداد فرصة االصابة مع الاستخدام الزائد لليد كالأعمال اليدوية وضائف الطياعة على الكمبيوتر, كما تزداد عند
+            النساء الحوامل, عند المصابين بالسكري وذوي الوزن الزائد (السمنة) وأسباب أخرى
+          </li>
+          <li class="rv" style="--i:3">
+            يستحسن تقييم طبيعة العمل اليدوي مع محاولة تعديله أو تقليله بطريقة تقلل من الجهد و الضغط الزائي على اليد.
+          </li>
+          <li class="rv" style="--i:4">
+            أخذ فترات راحة أثناء ممارسة الأعمال اليدوية.
+          </li>
+          <li class="rv" style="--i:5">
+            يمكن أن يساعد ارتداء جبيرة الراحة في منع الأعراض التي تحدث ليلاً, أة يمكن أن تكون مفيدة إذا ظهرت أعراضك من
+            خلال القيام بأنشطة معية.
+          </li>
+        </ul>
+      </div>
+      <div class="media rv" style="--i:1"><img src="assets\CTS Main.png" alt="مناطق الألم في متلازمة النفق الرسغي">
+      </div>
+    </div>
+  </section>
+
+  <!-- الفاصل -->
+  <section class="slide interval" data-label="الفاصل">
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <h2 class="rv">برنامج منزلي لمتلازمة النفق الرسغي</h2>
+  </section>
+
+  <!-- القسم 3: عنوان فرعي + 5 نقاط + صورة -->
+  <section class="slide alt flip" data-label="الأعراض">
+    <div class="inner">
+      <div class="text">
+        <h2 class="rv" style="--i:0">مواصفات سناد اليد</h2>
+        <ol class="steps">
+          <li class="rv" style="--i:1">يساعد في عالج متالزمة النفق الرسغي.</li>
+          <li class="rv" style="--i:2">أشرطة قابلة للتعديل و سهلة اللبس.</li>
+          <li class="rv" style="--i:3">ظهر اليد مرن و سهل التحكم في الدعامة و صالبة السناد. لذلك بإمكانك إزالة
+            الدعامة
+            خلال اليوم و اضافتها وقت النوم.</li>
+          <li class="rv" style="--i:4">مقاس الساند يعتمد على قياس محيط الرسغ.</li>
+          <li class="rv" style="--i:5">تأكد من سناد اليد هل هو لليد اليسرى أو اليمنى.</li>
+        </ol>
+      </div>
+      <div class="media rv" style="--i:1"><img src="assets\wrist support.png" alt="سناد اليد"></div>
+    </div>
+  </section>
+
+  <!-- القسم 4: عنوان فرعي + 6 نقاط + صورة -->
+  <section class="slide" data-label="النصائح">
+    <div class="inner">
+      <div class="text">
+        <h2 class="rv" style="--i:0">اﺳﺘﺨﺪام اﻟﻜﻤﺎدات اﻟﺒﺎردة</h2>
+        <ul class="points">
+          <li class="rv" style="--i:1">ﻟﻒ اﻟﻜﻤﺎدة ﺑﺎﺳﺘﺨﺪام ﻣﻨﺸﻔﺔ ﺻﻐﻴﺮة.</li>
+          <li class="rv" style="--i:2">اﺳﺘﺨﺪﻣﻬﺎ ﻟﻤﺪة 10 إﻟﻰ 20 دﻗﻴﻘﺔ وﺑﺎﻹﻣﻜﺎن ﺗﻜﺮار اﻻﺳﺘﺨﺪام ﻛﻞ ﺳﺎﻋﺘﻴﻦ إﻟﻰ ﺛﻼث ﺳﺎﻋﺎت
+          </li>
+          <li class="rv" style="--i:3"> ﻳﺠﺐ أن ﻻ ﺗﻀﻊ اﻟﺜﻠﺞ ﻣﺒﺎﺷﺮة ﻋﻠﻰ اﻟﺠﻠﺪ.</li>
+          <li class="rv" style="--i:4">ﻓﻲ ﺣﺎﻟﺔ اﻟﺘﺪﻟﻴﻚ ﺑﺎﺳﺘﺨﺪام اﻟﺜﻠﺞ ﻳﺘﻢ ﺗـﺪﻟـﻴـﻚ اﻟﻤﻨﻄﻘﺔ ﻣﺒﺎﺷﺮة ﺑﺎﺳﺘﺨﺪام ﻗﻄﻌﺔ ﺛﻠﺞ
+            ﻟﻤـﺪة دﻗﻴﻘﺘﻴﻦ إﻟﻰ ﺛﻼث دﻗﺎﺋﻖ ﻟﻠﻤﻨﻄﻘﺔ اﻟﺼﻐـﻴـﺮة و ﺧﻤﺲ دﻗﺎﺋﻖ ﻟﻠﻤﻨﺎﻃﻖ اﻟﻜﺒﻴﺮة.</li>
+          <li class="rv" style="--i:5">اﺳﺘﺨﺪم اﻟﻌﻼج اﻟﺒﺎرد ﻣﺒﺎﺷﺮة ﺑﻌﺪ اﻹﺻﺎﺑﺔ.</li>
+          <li class="rv" style="--i:6">ﻟﻠﺤﺼﻮل ﻋﻠﻰ أﻓﻀـﻞ اﻟـﻨـﺘـﺎﺋـﺞ ارﻓـﻊ اﻟـﺠـ اﻟﻤﺼﺎب ﻟﻸﻋﻠﻰ.</li>
+        </ul>
+      </div>
+      <div class="media rv" style="--i:1"><img src="assets\Ice.png" alt="كمادات الثلج"></div>
+    </div>
+  </section>
+
+  <!-- الأقسام 5-7: التمارين (GIF + تعليمات) -->
+  <section class="slide alt exercise flip" data-label="التمرين 1">
+    <div class="inner">
+      <div class="text">
+        <h2 class="rv" style="--i:0">التمرين الأول: تمديد عضلات اليد القابضة</h2>
+        <ol class="steps">
+          <li class="rv" style="--i:1"><b>الخطوة الأولى:</b> مدّ ذراعك: ارفع ذراعك بشكل مستقيم أمام جسمك بمستوى الكتف،
+            مع
+            الحفاظ على استقامة المرفق تماماً وجعل راحة كفك متجهة للأعلى نحو السقف.</li>
+          <li class="rv" style="--i:2"><b>الخطوة الثانية:</b> اسحب أصابعك للخلف: استخدم يدك الأخرى للإمساك بأصابع اليد
+            الممدودة، ثم اسحبها بلطف للأسفل وللخلف باتجاه جسمك لتمديد المعصم.</li>
+          <li class="rv" style="--i:3"><b>الخطوة الثالثة:</b> الثبات والتكرار: حافظ على هذه الوضعية لمدة 20 إلى 30 ثانية
+            مع التنفس بعمق.</li>
+        </ol>
+        <div class="chips rv" style="--i:4"><b>التكرار: 3 مرات</b><b>الثبات: 30 ثانية</b></div>
+      </div>
+      <div class="media rv cover-img" style="--i:1"><img src="assets\002-Wrist_and_Fingers_Flexors_Stretch_1.gif"
+          alt=""></div>
+    </div>
+  </section>
+
+  <section class="slide exercise" data-label="التمرين 2">
+    <div class="inner">
+      <div class="text">
+        <h2 class="rv" style="--i:0">التمرين الثاني: تمديد عضلات اليد الباسطة</h2>
+        <ol class="steps">
+          <li class="rv" style="--i:1"><b>الخطوة الأولى:</b>
+            مدّ ذراعك: ارفع ذراعك بشكل مستقيم أمام جسمك بمستوى الكتف، مع الحفاظ على استقامة المرفق تماماً وجعل
+            راحة كفك متجهة للأسفل نحو الأرض.
+          </li>
+          <li class="rv" style="--i:2"><b>الخطوة الثانية:</b>
+            اثنِ معصمك لأسفل: استخدم يدك الأخرى للإمساك بظهر اليد الممدودة (أو الأصابع)، ثم اضغط عليها بلطف للأسفل
+            وللداخل باتجاه جسمك
+          </li>
+          <li class="rv" style="--i:3"><b>الخطوة الثالثة:</b>
+            الثبات والتكرار: حافظ على هذه الوضعية لمدة 20 إلى 30 ثانية مع التنفس بعمق.
+          </li>
+        </ol>
+        <div class="chips rv" style="--i:4"><b>التكرار: 3 مرات</b><b>الثبات: 30 ثانية</b></div>
+      </div>
+      <div class="media rv cover-img" style="--i:1"><img src="assets\001-Wrist_and_Fingers_Extensors_Stretch.gif"
+          alt=""></div>
+    </div>
+  </section>
+
+  <section class="slide alt exercise flip" data-label="التمرين 3">
+    <div class="inner">
+      <div class="text">
+        <h2 class="rv" style="--i:0">التمرين الثالث: انزلاق العصب المتوسط.</h2>
+        <ol class="steps">
+          <li class="rv" style="--i:1">الخطوة الأولى: إرقع الكف بشكل مستقيم وكرر الحراكت مع الفيديو.</li>
+          <li class="rv" style="--i:2">الخطوة الثانية: اغلق الأصابع فقط مرتين متتاليتين.</li>
+          <li class="rv" style="--i:3">الخطوة الثالثة: اثني الأصابع مع ابقاء الأصراف في وضعية مستقيمة.</li>
+          <li class="rv" style="--i:4">الخطوة الثالثة: اغلق قبضتك مع ابقاء الإبهام في بشكل مستقيم.</li>
+        </ol>
+        <div class="chips rv" style="--i:4"><b>الوقت: 30 ثانية</b></div>
+      </div>
+      <div class="media rv" style="--i:1">
+        <video controls muted loop playsinline preload="metadata" poster="">
+          <source src="assets\cts exercise 3.mov" type="video/mp4">
+          متصفحك لا يدعم تشغيل الفيديو.
+        </video>
+      </div>
+    </div>
+  </section>
+
+  <!-- القسم 8: التذييل -->
+  <section class="slide footer" data-label="الختام">
+    <div class="inner">
+      <div class="logo-slot rv" style="--i:0"><span>الشعار</span><img src="assets\primary-logo-white.png"
+          alt="شعار مراكز الرعاية الصحية الأولية">
+      </div>
+      <p class="rv" style="--i:1">عزيزي المريض، إذا لم تشعر بأي تحسن في حالتك، يرجى زيارة الطبيب للاطمئنان. مع تمنياتنا
+        لك بالشفاء العاجل.</p>
+      <p class="contact rv" style="--i:2">خدمات العلاج الطبيعي | فريق الاصدارات</p>
+    </div>
+  </section>
+
+  <script>
+    (function () {
+      var slides = [].slice.call(document.querySelectorAll('.slide'));
+      var dots = document.getElementById('dots');
+      var bar = document.getElementById('progress');
+
+      slides.forEach(function (s, i) {
+        var b = document.createElement('button');
+        b.setAttribute('aria-label', s.dataset.label || ('القسم ' + (i + 1)));
+        b.title = s.dataset.label || '';
+        b.onclick = function () { s.scrollIntoView({ behavior: 'smooth' }) };
+        dots.appendChild(b);
+      });
+      var btns = [].slice.call(dots.children);
+
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          var i = slides.indexOf(e.target);
+          var v = e.target.querySelector('video');
+          if (e.isIntersecting) {
+            e.target.classList.add('in');
+            btns.forEach(function (b, k) { b.classList.toggle('on', k === i) });
+            if (v) v.play().catch(function () { });
+          } else {
+            e.target.classList.remove('in');
+            if (v) v.pause();
+          }
+        });
+      }, { threshold: .45 });
+      slides.forEach(function (s) { io.observe(s) });
+
+      function prog() {
+        var h = document.documentElement.scrollHeight - innerHeight;
+        bar.style.width = (h > 0 ? scrollY / h * 100 : 0) + '%';
+      }
+      addEventListener('scroll', prog, { passive: true }); prog();
+
+      function current() {
+        var c = 0, m = 1e9;
+        slides.forEach(function (s, i) { var d = Math.abs(s.getBoundingClientRect().top); if (d < m) { m = d; c = i } });
+        return c;
+      }
+      addEventListener('keydown', function (e) {
+        var k = e.key, i = current();
+        if (k === 'ArrowDown' || k === 'PageDown' || k === ' ') { e.preventDefault(); slides[Math.min(i + 1, slides.length - 1)].scrollIntoView({ behavior: 'smooth' }) }
+        if (k === 'ArrowUp' || k === 'PageUp') { e.preventDefault(); slides[Math.max(i - 1, 0)].scrollIntoView({ behavior: 'smooth' }) }
+      });
+    })();
+  </script>
+</body>
+
+</html>
